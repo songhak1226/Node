@@ -3,6 +3,7 @@ const cookieRouter = require('./routes/cookie')
 const sessionRouter = require('./routes/session')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const filestore = require('session-file-store')(session)
 const app = express()
 
 app.use(cookieParser('secretkey')) // 쿠키 암호화 키 설정
@@ -12,7 +13,8 @@ app.use(session({
     resave : false, // 세션에 수정사항이 없더라도 다시 저장할것인지에 대한 설정 false - 안한다
     cookie : { // 쿠키 설정
         httpOnly : true
-    }
+    },
+    store : new filestore()
 }))
 
 app.use('/c', cookieRouter) // localhost:8888/c/...  -> /c 로 시작하는 모든건 cookieRouter로 처리하겠다

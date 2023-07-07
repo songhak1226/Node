@@ -12,6 +12,8 @@ nunjucks.configure('views', {
     watch : true // html 파일이 연결되면 템플리 엔진을 렌더링(화면에 보여주겠다)
 })
 
+app.use(express.urlencoded({extended : true})) // body 데이터
+
 app.use('/', indexRouter) // localhost:8888/...
 
 app.set('port', process.env.POST||8888)
