@@ -14,3 +14,5 @@ ex) Spring-JPA, node-Sequelize
 5. config.js 수정 -> 실제 사용할 db 정보로 변경
 
 6. 'User' 객체 정의 -> models폴더 안에 정의
+7. index -> 객체 사용 정의 / -> models 폴더
+8. app.js -> sequelize 설정
