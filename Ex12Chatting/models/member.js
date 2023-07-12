@@ -29,6 +29,6 @@ module.exports = class Member extends Sequelize.Model {
         })
     }
     static associate(db){
-
+        db.Member.hasMany(db.Chat, {foreignKey:'userid', sourceKey:'id'})
     }
 }

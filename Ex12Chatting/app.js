@@ -3,10 +3,12 @@ const indexRouter = require('./routes/index')
 const nunjucks = require('nunjucks')
 const {sequelize} = require('./models/index')
 const MemberRouter = require('./routes/memberRouter')
+const chatRouter = require('./routes/chat')
 const session = require('express-session')
 const bodyParser = require('body-parser')
 const filestore = require('session-file-store')(session)
 const cookieParser = require('cookie-parser')
+const webSocket = require('./socket')
 const app = express()
 
 // force : false -> 기존 테이블은 건들지 않음
@@ -44,8 +46,11 @@ nunjucks.configure('views', {
 
 app.use('/', indexRouter)
 app.use('/member', MemberRouter)
+app.use('/chat', chatRouter)
 
 app.set('port', process.env.POST || 8888)
-app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), () => {
     console.log(app.get('port'), '번 포트에서 서버 연결 기다리는 중...');
 })
+
+webSocket(server)

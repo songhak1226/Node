@@ -13,6 +13,11 @@ router.post('/login', async(req,res,next)=>{
         // 세션에 저장
         req.session.member = result
         req.session.save(function(){
+            if(result){
+                res.redirect('/rooms')
+            } else {
+                res.redirect('/')
+            }
         res.send('OK')
         })
 
