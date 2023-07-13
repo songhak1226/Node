@@ -24,6 +24,9 @@ sequelize.sync({force : false})
     console.log(err);
 })
 
+// 정적리소스 경로 지정(css, js(front-end 화면구현)...)
+app.use(express.static(__dirname+'/public'))
+
 
 app.use(cookieParser('secretkey')) // 쿠키 암호화 키 설정
 app.use(session({
@@ -53,4 +56,4 @@ const server = app.listen(app.get('port'), () => {
     console.log(app.get('port'), '번 포트에서 서버 연결 기다리는 중...');
 })
 
-webSocket(server)
+webSocket(server, app)

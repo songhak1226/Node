@@ -1,9 +1,11 @@
 const socketIO = require('socket.io')
 
                 // express server
-module.exports = (server) => {
+module.exports = (server, app) => {
     // socketIO 객체 생성
     const io = socketIO(server, {path:'/socket.io'})
+
+    app.set('io', io)
 
     // 라우팅 -> 네임스페이스 : 경로
     // 채팅 -> /chat
@@ -16,13 +18,15 @@ module.exports = (server) => {
         console.log('방 아이디',socket.request.headers.referer)
         const ref = socket.request.headers.referer
         const roomId = ref.split('/')[ref.split('/').length-1]
-        console.log(roomId);
+        console.log(roomId)
+        socket.join(roomId)
 
         socket.on('disconnect', ()=>{
             console.log('chat 네임스페이스에서 접속 해제')
         })
         socket.on('chat', (data)=>{ // data : 채팅 관련 데이터
-
+            // console.log('socket.js : ', data);
+            socket.to(roomId).emit(data)
         })
     })
 }
